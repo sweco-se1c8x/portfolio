@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://localhost:5173/")
+        builder => builder.WithOrigins("https://localhost:5173")
                           .AllowAnyHeader()
                           .AllowAnyMethod()
                           .AllowCredentials());
@@ -29,52 +29,27 @@ builder.Services.AddIdentityApiEndpoints<User>()
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.SameSite = SameSiteMode.None;
-
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-
-    options.Cookie.IsEssential = true;
-
 });
 
-builder.Services.AddScoped<IContactService, ContactService>();
+// Register ILoginService and its implementation
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+
 builder.Services.AddScoped<IProjectService, ProjectService>();
 
-
-builder.Services.AddIdentityCore<User>(options => { 
-    options.SignIn.RequireConfirmedAccount = true;
-    options.Password.RequireDigit = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequiredLength = 6;
-    options.Password.RequiredUniqueChars = 0;
-
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-    options.Lockout.MaxFailedAccessAttempts = 5;
-    options.Lockout.AllowedForNewUsers = true;
-
-    //user settings
-    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSUVWXYZ0123456789-._@+";
-    options.User.RequireUniqueEmail = true;
-
-}).AddEntityFrameworkStores<DataContext>();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseCors("AllowSpecificOrigin");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.MapIdentityApi<User>();
-
 app.UseHttpsRedirection();
-app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllers();

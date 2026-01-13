@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using portfolio.Server.Infrastructure.Models;
 using PortfolioBackend.PortfolioBackend.Core.Models;
 
 namespace PortfolioBackend.Infrastructure
@@ -13,13 +14,19 @@ namespace PortfolioBackend.Infrastructure
         public DbSet<Translation> Translations { get; set; }
 
         public DbSet<Contact> Contacts { get; set; }
-        public DbSet<Project> Projects { get; set; }
-        public DbSet<Competency> Competencies { get; set; }
+        public DbSet<DbProject> Projects { get; set; }
+        public DbSet<DbCompetency> Competencies { get; set; }
         public DbSet<Skill> Skills { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region DbProject
+            modelBuilder.Entity<DbProject>()
+                .Navigation(p => p.Competencies).AutoInclude();
+
+            #endregion DbProject
+                
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Translation>()

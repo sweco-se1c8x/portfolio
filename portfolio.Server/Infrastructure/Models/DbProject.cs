@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PortfolioBackend.PortfolioBackend.Core.Models
+
+using System.ComponentModel.DataAnnotations;
+using portfolio.Server.Infrastructure.Models;
+
+public class DbProject
 {
-    public class Project : BaseModels
-    {
+        [Key]
+        public Guid Id { get; set; }
         [Required]
         public string ProjectName { get; set; }
         public string Company { get; set; }
@@ -12,7 +14,5 @@ namespace PortfolioBackend.PortfolioBackend.Core.Models
         public string Role { get; set; }
         public DateTime? ProjectStartDate { get; set; }
         public DateTime? ProjectEndDate { get; set; }
-        public ICollection<Competency> Competencies { get; set; }
-
-    }
+        public ICollection<DbCompetency> Competencies { get; set; }
 }

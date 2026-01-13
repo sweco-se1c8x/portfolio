@@ -6,9 +6,9 @@ namespace PortfolioBackend.PortfolioBackend.Core.Repositories
     {
         Task<IEnumerable<Project>> GetAllAsync();
         Task<Project> GetByIdAsync(Guid projectId);
-        void Insert(Project project);
-        void Update(Project project);
-        void Remove(Project project);
+        Task<Project> Insert(Project project);
+        Task<Project> Update(Guid projectId, Project project);
+        Task Delete(Guid projectId);
         Task<int> SaveChangesAsync();
 
     }

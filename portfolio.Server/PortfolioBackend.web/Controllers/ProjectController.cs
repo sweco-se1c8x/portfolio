@@ -36,19 +36,19 @@ namespace PortfolioBackend.PortfolioBackend.web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProjectDto>> createProject(ProjectDto projectDto)
+        public async Task<ActionResult<ProjectDto>> createProject(Project project)
         {
             
-            var project = await _projectService.CreateAsync(projectDto);
+            var createdpProject = await _projectService.CreateAsync(project);
 
-            return CreatedAtAction(nameof(GetProject), new { id = project.Id }, projectDto);
+            return CreatedAtAction(nameof(GetProject), new { id = createdpProject.Id }, project);
 
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProject(Guid id, ProjectDto projectDto)
+        public async Task<IActionResult> UpdateProject(Guid id, Project project)
         {
-            await _projectService.UpdateAsync(id, projectDto);
+            await _projectService.UpdateAsync(id, project);
             return NoContent();
         }
 

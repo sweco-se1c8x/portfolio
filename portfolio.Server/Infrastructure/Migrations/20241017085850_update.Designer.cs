@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PortfolioBackend.Infrastructure;
 
@@ -11,9 +12,11 @@ using PortfolioBackend.Infrastructure;
 namespace PortfolioBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241017085850_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,9 +27,11 @@ namespace PortfolioBackend.Migrations
 
             modelBuilder.Entity("DbProject", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Pk")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Pk"));
 
                     b.Property<string>("Company")
                         .IsRequired()
@@ -35,6 +40,9 @@ namespace PortfolioBackend.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ProjectEndDate")
                         .HasColumnType("datetime2");
@@ -50,7 +58,7 @@ namespace PortfolioBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Pk");
 
                     b.ToTable("Projects");
                 });
@@ -190,13 +198,18 @@ namespace PortfolioBackend.Migrations
 
             modelBuilder.Entity("PortfolioBackend.PortfolioBackend.Core.Models.Contact", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("Key")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -217,8 +230,13 @@ namespace PortfolioBackend.Migrations
 
             modelBuilder.Entity("PortfolioBackend.PortfolioBackend.Core.Models.Skill", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("Key")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SkillName")
@@ -333,20 +351,28 @@ namespace PortfolioBackend.Migrations
 
             modelBuilder.Entity("portfolio.Server.Infrastructure.Models.DbCompetency", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Pk")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Pk"));
 
                     b.Property<string>("CompetencyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.Property<int>("ProjectPk")
+                        .HasColumnType("int");
 
-                    b.HasIndex("ProjectId");
+                    b.HasKey("Pk");
+
+                    b.HasIndex("ProjectPk");
 
                     b.ToTable("Competencies");
                 });
@@ -406,7 +432,7 @@ namespace PortfolioBackend.Migrations
                 {
                     b.HasOne("DbProject", "Project")
                         .WithMany("Competencies")
-                        .HasForeignKey("ProjectId")
+                        .HasForeignKey("ProjectPk")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

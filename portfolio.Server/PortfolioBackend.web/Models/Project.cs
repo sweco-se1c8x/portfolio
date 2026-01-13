@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PortfolioBackend.PortfolioBackend.Core.Models
+namespace PortfolioBackend.PortfolioBackend.Web.Models
 {
-    public class Project : BaseModels
+    public class Project
     {
+        public Guid Id { get; set; }
         [Required]
         public string ProjectName { get; set; }
         public string Company { get; set; }

@@ -8,8 +8,8 @@ namespace PortfolioBackend.PortfolioBackend.Core.Services
     {
         Task<IEnumerable<Project>> GetAllAsync();
         Task<Project> GetByIdAsync(Guid projectId);
-        Task<Project> CreateAsync(ProjectDto projectDto);
-        Task UpdateAsync(Guid projectId, ProjectDto projectDto);
+        Task<Project> CreateAsync(Project project);
+        Task<Project> UpdateAsync(Guid projectId, Project project);
         Task DeleteAsync(Guid projectId);
     }
 }

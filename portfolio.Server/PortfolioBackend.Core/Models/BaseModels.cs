@@ -1,9 +1,11 @@
-﻿namespace PortfolioBackend.PortfolioBackend.Core.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PortfolioBackend.PortfolioBackend.Core.Models
 {
     public class BaseModels
     {
-        public int Id { get; set; }
-        public Guid Key { get; set; }
+        [Key]
+        public Guid Id { get; set; }
 
     }
 }

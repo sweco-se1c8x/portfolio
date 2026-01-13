@@ -51,11 +51,3 @@ namespace PortfolioBackend.PortfolioBackend.web.Controllers
         }
     }
 }
-
-//"id": "1",
-//  "userName": "Ayham",
-//  "normalizedUserName": "string",
-//  "email": "ayhamdarwish1993@gmail.com",
-//  "normalizedEmail": "string",
-//  "emailConfirmed": true,
-//  "passwordHash": "123456",

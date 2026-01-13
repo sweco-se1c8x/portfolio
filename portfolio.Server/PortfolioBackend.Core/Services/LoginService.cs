@@ -20,6 +20,7 @@ namespace PortfolioBackend.PortfolioBackend.Core.Services
         public async Task<ActionResult> CheckUser()
         {
             var isAuthenticated = _signInManager.Context.User.Identity.IsAuthenticated;
+
             if (!isAuthenticated)
             {
                 return new UnauthorizedObjectResult("User is not authenticated.");
